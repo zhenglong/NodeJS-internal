@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D1A76B7E2439FED0006B9142 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1A76B7D2439FED0006B9142 /* main.cpp */; };
+		D1A76B9E243A1E26006B9142 /* main1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1A76B9C243A1E26006B9142 /* main1.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		D1A76B7A2439FED0006B9142 /* v8-tutorial */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "v8-tutorial"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1A76B7D2439FED0006B9142 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D1A76B9C243A1E26006B9142 /* main1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main1.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A76B7D2439FED0006B9142 /* main.cpp */,
+				D1A76B9C243A1E26006B9142 /* main1.cpp */,
 			);
 			path = "v8-tutorial";
 			sourceTree = "<group>";
@@ -119,6 +122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1A76B9E243A1E26006B9142 /* main1.cpp in Sources */,
 				D1A76B7E2439FED0006B9142 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,6 +246,9 @@
 				HEADER_SEARCH_PATHS = (
 					"/Users/zhenglong.luo/Downloads/node-v12.16.1/deps/v8/include",
 					"/Users/zhenglong.luo/Downloads/node-v12.16.1/deps/v8/src",
+					"/Users/zhenglong.luo/Downloads/node-v12.16.1/deps/v8",
+					"/Users/zhenglong.luo/Library/Developer/Xcode/DerivedData/v8-fmvshqavoydbleemhhzjbwmlcmqj/Build/Products/DerivedSources/Debug/torque-output-root",
+					"/Users/zhenglong.luo/Library/Developer/Xcode/DerivedData/v8-fmvshqavoydbleemhhzjbwmlcmqj/Build/Products/DerivedSources/Debug/generate-bytecode-output-root",
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/zhenglong.luo/Library/Developer/Xcode/DerivedData/v8-fmvshqavoydbleemhhzjbwmlcmqj/Build/Products/Debug/";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -257,6 +264,9 @@
 				HEADER_SEARCH_PATHS = (
 					"/Users/zhenglong.luo/Downloads/node-v12.16.1/deps/v8/include",
 					"/Users/zhenglong.luo/Downloads/node-v12.16.1/deps/v8/src",
+					"/Users/zhenglong.luo/Downloads/node-v12.16.1/deps/v8",
+					"/Users/zhenglong.luo/Library/Developer/Xcode/DerivedData/v8-fmvshqavoydbleemhhzjbwmlcmqj/Build/Products/DerivedSources/Debug/torque-output-root",
+					"/Users/zhenglong.luo/Library/Developer/Xcode/DerivedData/v8-fmvshqavoydbleemhhzjbwmlcmqj/Build/Products/DerivedSources/Debug/generate-bytecode-output-root",
 				);
 				LIBRARY_SEARCH_PATHS = "/Users/zhenglong.luo/Library/Developer/Xcode/DerivedData/v8-fmvshqavoydbleemhhzjbwmlcmqj/Build/Products/Debug/";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";

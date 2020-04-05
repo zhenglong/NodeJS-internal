@@ -2,32 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <iostream>
 
 #include "libplatform/libplatform.h"
 #include "v8.h"
 
+#include "ast/ast.h"
+#include "ast/prettyprinter.h"
+#include "parsing/parsing.h"
+#include "parsing/parse-info.h"
+
+
 using namespace v8;
+namespace i = v8::internal;
 
-int age = 41;
-
-void doit(const FunctionCallbackInfo<Value>& args) {
-  String::Utf8Value str(args.GetIsolate(), args[0]);
-  printf("doit argument = %s...\n", *str);
-  args.GetReturnValue().Set(String::NewFromUtf8(args.GetIsolate(), "done", NewStringType::kNormal).ToLocalChecked());
-}
-
-void ageGetter(Local<String> property, const PropertyCallbackInfo<Value>& info) {
-  info.GetReturnValue().Set(age);
-}
-
-void ageSetter(Local<String> property, Local<Value> value, const PropertyCallbackInfo<void>& info) {
-  age = value->Int32Value(info.GetIsolate()->GetCurrentContext()).FromMaybe(-1);
-}
-
-void propertyListener(Local<String> name, const PropertyCallbackInfo<Value>& info) {
-  String::Utf8Value utf8_value(info.GetIsolate(), name);
-  std::string key = std::string(*utf8_value);
-  printf("ageListener called for nam %s.\n", key.c_str());
+i::Isolate* asInternal(Isolate *isolate) {
+    return reinterpret_cast<i::Isolate*>(isolate);
 }
 
 int main(int argc, char* argv[]) {
@@ -42,25 +32,17 @@ int main(int argc, char* argv[]) {
     {
         Isolate::Scope isolate_scope(isolate);
         HandleScope handle_scope(isolate);
-
-        Local<ObjectTemplate> global = ObjectTemplate::New(isolate);
-        global->Set(String::NewFromUtf8(isolate, "doit", NewStringType::kNormal).ToLocalChecked(),
-                FunctionTemplate::New(isolate, doit));
-        global->SetAccessor(String::NewFromUtf8(isolate, "age", NewStringType::kNormal).ToLocalChecked(),
-                ageGetter,
-                ageSetter);
-        
-
-        Local<Context> context = Context::New(isolate, NULL, global);
-        Context::Scope context_scope(context);
-
-        const char *js = "age = 40; doit(age);";
-        Local<String> source = String::NewFromUtf8(isolate, js, NewStringType::kNormal).ToLocalChecked();
-        Local<Script> script = Script::Compile(context, source).ToLocalChecked();
-        Local<Value> result = script->Run(context).ToLocalChecked();
-
-        String::Utf8Value utf8(isolate, result);
-        printf("%s\n", *utf8);
+        auto internalIsolate = asInternal(isolate);
+        i::Factory *factory = internalIsolate->factory();
+        i::ParseInfo info(internalIsolate);
+        i::Handle<i::String> source = factory->InternalizeUtf8String("var a=1,b=2,c=3,d=4; var e = a+b*(c+d);");
+        ScriptOriginOptions options;
+        info.CreateScript(internalIsolate, source, options);
+        auto res = internal::parsing::ParseProgram(&info, asInternal(isolate));
+        printf("%d\n", res);
+        std::cout << i::AstPrinter(info.stack_limit())
+        .PrintProgram(info.literal())
+        << std::endl;
     }
 
     isolate->Dispose();
