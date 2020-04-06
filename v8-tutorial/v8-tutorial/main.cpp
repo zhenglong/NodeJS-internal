@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
         auto internalIsolate = asInternal(isolate);
         i::Factory *factory = internalIsolate->factory();
         i::ParseInfo info(internalIsolate);
-        i::Handle<i::String> source = factory->InternalizeUtf8String("var a=1,b=2,c=33,d='4'; var e = a+b*(c+d);");
+        i::Handle<i::String> source = factory->InternalizeUtf8String("var a=1,b=2,c=33,d='4';/* some comments */ var e = a+b*(c+d);");
         
         // 打印Token
         std::unique_ptr<i::Utf16CharacterStream> stream(i::ScannerStream::For(internalIsolate, source));
