@@ -38,7 +38,20 @@ int main(int argc, char* argv[])
 
         auto callback = FunctionTemplate::New(isolate, handler);
 
-        Local<String> source = String::NewFromUtf8(isolate, "function add(num) { return function(v) { return (num + v); } } var addFive = add(5); new Promise(function(resolve) { resolve(addFive(10)); }).then(cppHandler).then(function(res) { return res + ' modified'; });", NewStringType::kNormal)
+        auto sourceStr = R"(
+            function add(num) { 
+                return function(v) { 
+                    return (num + v); 
+                } 
+            } 
+            var addFive = add(5); 
+            new Promise(function(resolve) { 
+                resolve(addFive(10)); 
+            }).then(cppHandler)
+            .then(function(res) { 
+                return res + ' modified'; 
+            });)";
+        Local<String> source = String::NewFromUtf8(isolate, sourceStr, NewStringType::kNormal)
             .ToLocalChecked();
 
         Local<Script> script = Script::Compile(context, source).ToLocalChecked();
